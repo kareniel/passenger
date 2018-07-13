@@ -1,0 +1,193 @@
+systems: 
+  engines:
+    life:
+    hull:
+    shields:
+    weapons:
+    gravity:
+    drive:
+    sensors:
+    navigation:
+    communication:
+
+passengers: 
+  - 
+    name: ''
+    role: 'Captain'
+    location: 'Ready Room'
+    position:  
+      x: 0
+      y: 0
+  - 
+    name: ''
+    role: 'Scientist'
+    location: 'Bridge'
+    position: 
+      x: 0
+      y: 0
+  - 
+    name: ''
+    role: 'Pilot'
+    location: 'Bridge'
+    position: 
+      x: 0
+      y: 0
+  - 
+    name: ''
+    role: 'Engineer'
+    location: 'Engineering'
+    position: 
+      x: 0
+      y: 0
+  - 
+    name: ''
+    role: 'Steward'
+    location: 'Store'
+    position: 
+      x: 0
+      y: 0
+  - 
+    name: ''
+    role: 'Security Officer'
+    location: 'Promenade'
+    position: 
+      x: 0
+      y: 0
+  - 
+    name: ''
+    role: 'Guest'
+    location: 'Promenade'
+    position: 
+      x: 0
+      y: 0
+  - 
+    name: ''
+    role: 'Guest'
+    location: 'Mess Hall'
+    position: 
+      x: 0
+      y: 0
+  - 
+    name: ''
+    role: 'Guest'
+    location: 'Guest Quarters'
+    position: 
+      x: 0
+      y: 0
+
+rooms: 
+  - name: 'Cargo Bay'
+  - name: 'Cargo Hall'
+  - name: 'Cargo Section A'
+  - name: 'Cargo Section C'
+  - name: 'Cargo Section D'
+  - name: 'Store'
+  - name: 'Stockroom'
+  - name: 'Guest Quarters'
+  - name: 'Promenade'
+  - name: 'Airlock'
+  - name: 'Mess Hall'
+  - name: 'Crew Quarters'
+  - name: 'Robotics & Systems'
+  - name: 'Engineering'
+  - name: 'Port Engine'
+  - name: 'Starboard Engine'
+  - name: 'Bridge'
+  - name: 'Ready Room'
+  - name: 'Dorsal Hull'
+  - name: 'Port-side Hull'
+  - name: 'Dorsal Hull'
+
+doorways:
+  -
+    rooms: 
+      - 'Cargo Hall'
+      - 'Cargo Bay' 
+    locked: true
+
+  - 
+    rooms: 
+      - 'Cargo Hall'
+      - 'Cargo Section A' 
+    locked: true
+
+  - 
+    rooms: 
+      - 'Cargo Hall'
+      - 'Cargo Section C' 
+    locked: true
+
+  - 
+    rooms: 
+      - 'Cargo Hall'
+      - 'Cargo Section D' 
+    locked: true
+  - 
+    rooms: 
+      - 'Cargo Hall'
+      - 'Store' 
+  - 
+    rooms: 
+      - 'Cargo Hall'
+      - 'Stockroom' 
+    locked: true
+
+  - 
+    rooms: 
+      - 'Cargo Hall'
+      - 'Promenade' 
+  - 
+    rooms: 
+      - 'Promenade'
+      - 'Crew Quarters' 
+    locked: true
+
+  - 
+    rooms: 
+      - 'Promenade'
+      - 'Guest Quarters' 
+  - 
+    rooms: 
+      - 'Promenade'
+      - 'Mess Hall' 
+  - 
+    rooms: 
+      - 'Mess Hall'
+      - 'Airlock' 
+  - 
+    rooms: 
+      - 'Airlock'
+      - 'Port-side Hull' 
+    locked: true
+
+  - 
+    rooms: 
+      - 'Port-side Hull'
+      - 'Dorsal Hull' 
+  - 
+    rooms: 
+      - 'Mess Hall'
+      - 'Engineering' 
+    locked: true
+
+  - 
+    rooms: 
+      - 'Engineering'
+      - 'Robotics & Systems' 
+  - 
+    rooms: 
+      - 'Engineering'
+      - 'Port Engine' 
+  - 
+    rooms: 
+      - 'Engineering'
+      - 'Starboard Engine' 
+  - 
+    rooms: 
+      - 'Engineering'
+      - 'Bridge' 
+  - 
+    rooms: 
+      - 'Bridge'
+      - 'Ready Room' 
+      

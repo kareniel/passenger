@@ -1,0 +1,34 @@
+{
+  "name": "just-a-passenger",
+  "version": "1.0.0",
+  "description": "game",
+  "main": "index.js",
+  "scripts": {
+    "start": "budo src/index.js:bundle.js --dir public --live --pushstate --port=8080 -- -t brfs",
+    "test": "standard --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/kareniel/passenger.git"
+  },
+  "keywords": [
+    "game"
+  ],
+  "author": "kareniel",
+  "license": "CC-BY-SA-4.0",
+  "bugs": {
+    "url": "https://github.com/kareniel/passenger/issues"
+  },
+  "homepage": "https://github.com/kareniel/passenger#readme",
+  "devDependencies": {
+    "budo": "^11.3.0",
+    "fs-extra": "^6.0.1",
+    "standard": "^11.0.1"
+  },
+  "dependencies": {
+    "brfs": "^2.0.0",
+    "choo": "^6.12.1",
+    "choo-devtools": "^2.5.1",
+    "js-yaml": "^3.12.0"
+  }
+}
