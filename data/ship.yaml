@@ -1,193 +1,328 @@
-systems: 
-  engines:
-    life:
-    hull:
-    shields:
-    weapons:
-    gravity:
-    drive:
-    sensors:
-    navigation:
-    communication:
-
-passengers: 
-  - 
-    name: ''
-    role: 'Captain'
-    location: 'Ready Room'
-    position:  
-      x: 0
-      y: 0
-  - 
-    name: ''
-    role: 'Scientist'
-    location: 'Bridge'
-    position: 
-      x: 0
-      y: 0
-  - 
-    name: ''
-    role: 'Pilot'
-    location: 'Bridge'
-    position: 
-      x: 0
-      y: 0
-  - 
-    name: ''
-    role: 'Engineer'
-    location: 'Engineering'
-    position: 
-      x: 0
-      y: 0
-  - 
-    name: ''
-    role: 'Steward'
-    location: 'Store'
-    position: 
-      x: 0
-      y: 0
-  - 
-    name: ''
-    role: 'Security Officer'
-    location: 'Promenade'
-    position: 
-      x: 0
-      y: 0
-  - 
-    name: ''
-    role: 'Guest'
-    location: 'Promenade'
-    position: 
-      x: 0
-      y: 0
-  - 
-    name: ''
-    role: 'Guest'
-    location: 'Mess Hall'
-    position: 
-      x: 0
-      y: 0
-  - 
-    name: ''
-    role: 'Guest'
-    location: 'Guest Quarters'
-    position: 
-      x: 0
-      y: 0
-
 rooms: 
   - name: 'Cargo Bay'
+    size: 
+      x: 32
+      y: 32
   - name: 'Cargo Hall'
+    size: 
+      x: 32
+      y: 32
   - name: 'Cargo Section A'
+    size: 
+      x: 32
+      y: 32
   - name: 'Cargo Section C'
+    size: 
+      x: 32
+      y: 32
   - name: 'Cargo Section D'
+    size: 
+      x: 32
+      y: 32
   - name: 'Store'
+    size: 
+      x: 32
+      y: 32
   - name: 'Stockroom'
+    size: 
+      x: 32
+      y: 32
   - name: 'Guest Quarters'
+    size: 
+      x: 32
+      y: 32
+    objects:
+      - name: 'Seedlings'
+        description: 'A glass canister containing plant seedlings'
+        conditions:
+          - 
+            - 'Ship ran into an asteroid'
+            - 'is'
+            - false
+      - name: 'Broken seedlings canister'
+        description: 'A broken glass canister. The seedlings that were inside are dying.'
+        conditions:
+          - 
+            - 'Ship ran into an asteroid'
+            - 'is'
+            - true
   - name: 'Promenade'
+    size: 
+      x: 32
+      y: 32
   - name: 'Airlock'
+    size: 
+      x: 32
+      y: 32
   - name: 'Mess Hall'
+    size: 
+      x: 32
+      y: 32
   - name: 'Crew Quarters'
+    size: 
+      x: 32
+      y: 32
   - name: 'Robotics & Systems'
+    size: 
+      x: 32
+      y: 32
   - name: 'Engineering'
+    size: 
+      x: 32
+      y: 32
   - name: 'Port Engine'
+    size: 
+      x: 32
+      y: 32
   - name: 'Starboard Engine'
+    size: 
+      x: 32
+      y: 32
   - name: 'Bridge'
+    size: 
+      x: 32
+      y: 32
   - name: 'Ready Room'
+    size: 
+      x: 32
+      y: 32
   - name: 'Dorsal Hull'
+    size: 
+      x: 32
+      y: 32
   - name: 'Port-side Hull'
+    size: 
+      x: 32
+      y: 32
   - name: 'Dorsal Hull'
+    size: 
+      x: 32
+      y: 32
 
 doorways:
   -
     rooms: 
-      - 'Cargo Hall'
-      - 'Cargo Bay' 
+      - name: 'Cargo Hall'
+        position:
+          x: 0
+          y: 0
+      - name: 'Cargo Bay' 
+        position:
+          x: 0
+          y: 0
     locked: true
 
   - 
     rooms: 
-      - 'Cargo Hall'
-      - 'Cargo Section A' 
+      - name: 'Cargo Hall'
+        position:
+          x: 0
+          y: 0
+      - name: 'Cargo Section A' 
+        position:
+          x: 0
+          y: 0
     locked: true
 
   - 
     rooms: 
-      - 'Cargo Hall'
-      - 'Cargo Section C' 
+      - name: 'Cargo Hall'
+        position:
+          x: 0
+          y: 0
+      - name: 'Cargo Section C' 
+        position:
+          x: 0
+          y: 0
     locked: true
 
   - 
     rooms: 
-      - 'Cargo Hall'
-      - 'Cargo Section D' 
+      - name: 'Cargo Hall'
+        position:
+          x: 0
+          y: 0
+      - name: 'Cargo Section D' 
+        position:
+          x: 0
+          y: 0
     locked: true
   - 
     rooms: 
-      - 'Cargo Hall'
-      - 'Store' 
+      - name: 'Cargo Hall'
+        position:
+          x: 0
+          y: 0
+      - name: 'Store' 
+        position:
+          x: 0
+          y: 0
   - 
     rooms: 
-      - 'Cargo Hall'
-      - 'Stockroom' 
-    locked: true
-
-  - 
-    rooms: 
-      - 'Cargo Hall'
-      - 'Promenade' 
-  - 
-    rooms: 
-      - 'Promenade'
-      - 'Crew Quarters' 
-    locked: true
-
-  - 
-    rooms: 
-      - 'Promenade'
-      - 'Guest Quarters' 
-  - 
-    rooms: 
-      - 'Promenade'
-      - 'Mess Hall' 
-  - 
-    rooms: 
-      - 'Mess Hall'
-      - 'Airlock' 
-  - 
-    rooms: 
-      - 'Airlock'
-      - 'Port-side Hull' 
+      - name: 'Cargo Hall'
+        position:
+          x: 0
+          y: 0
+      - name: 'Stockroom'
+        position:
+          x: 0
+          y: 0 
     locked: true
 
   - 
     rooms: 
-      - 'Port-side Hull'
-      - 'Dorsal Hull' 
+      - name: 'Cargo Hall'
+        position:
+          x: 0
+          y: 0
+      - name: 'Promenade'
+        position:
+          x: 0
+          y: 0 
   - 
     rooms: 
-      - 'Mess Hall'
-      - 'Engineering' 
+      - name: 'Promenade'
+        position:
+          x: 0
+          y: 0
+      - name: 'Crew Quarters' 
+        position:
+          x: 0
+          y: 0
     locked: true
 
   - 
     rooms: 
-      - 'Engineering'
-      - 'Robotics & Systems' 
+      - name: 'Promenade'
+        position:
+          x: 0
+          y: 0
+      - name: 'Guest Quarters' 
+        position:
+          x: 0
+          y: 0
   - 
     rooms: 
-      - 'Engineering'
-      - 'Port Engine' 
+      - name: 'Promenade'
+        position:
+          x: 0
+          y: 0
+      - name: 'Mess Hall' 
+        position:
+          x: 0
+          y: 0
   - 
     rooms: 
-      - 'Engineering'
-      - 'Starboard Engine' 
+      - name: 'Mess Hall'
+        position:
+          x: 0
+          y: 0
+      - name: 'Airlock' 
+        position:
+          x: 0
+          y: 0
   - 
     rooms: 
-      - 'Engineering'
-      - 'Bridge' 
+      - name: 'Airlock'
+        position:
+          x: 0
+          y: 0
+      - name: 'Port-side Hull'
+        position:
+          x: 0
+          y: 0 
+    locked: true
+
   - 
     rooms: 
-      - 'Bridge'
-      - 'Ready Room' 
-      
+      - name: 'Port-side Hull'
+        position:
+          x: 0
+          y: 0
+      - name: 'Dorsal Hull' 
+        position:
+          x: 0
+          y: 0
+  - 
+    rooms: 
+      - name: 'Mess Hall'
+        position:
+          x: 0
+          y: 0
+      - name: 'Engineering' 
+        position:
+          x: 0
+          y: 0
+    locked: true
+
+  - 
+    rooms: 
+      - name: 'Engineering'
+        position:
+          x: 0
+          y: 0
+      - name: 'Robotics & Systems' 
+        position:
+          x: 0
+          y: 0
+  - 
+    rooms: 
+      - name: 'Engineering'
+        position:
+          x: 0
+          y: 0
+      - name: 'Port Engine' 
+        position:
+          x: 0
+          y: 0
+  - 
+    rooms: 
+      - name: 'Engineering'
+        position:
+          x: 0
+          y: 0
+      - name: 'Starboard Engine' 
+        position:
+          x: 0
+          y: 0
+  - 
+    rooms: 
+      - name: 'Engineering'
+        position:
+          x: 0
+          y: 0
+      - name: 'Bridge' 
+        position:
+          x: 0
+          y: 0
+  - 
+    rooms: 
+      - name: 'Bridge'
+        position:
+          x: 0
+          y: 0
+      - name: 'Ready Room' 
+        position:
+          x: 0
+          y: 0
+
+systems: 
+  engines:
+    life:
+      percent: 100.00
+    hull:
+      percent: 100.00
+    shields:
+      percent: 100.00
+    weapons:
+      percent: 100.00
+    gravity:
+      percent: 100.00
+    drive:
+      percent: 100.00
+    sensors:
+      percent: 100.00
+    navigation:
+      percent: 100.00
+    communication:
+      percent: 100.00

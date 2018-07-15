@@ -2,6 +2,7 @@ var fs = require('fs')
 var path = require('path')
 var yaml = require('js-yaml')
 
+const MILLISECONDS_PER_TICK = 1000
 const TICKS_PER_ROUND = 3
 const ROUNDS_PER_PERIOD = 300
 const PERIODS_PER_DAY = 4
@@ -11,11 +12,11 @@ module.exports = store
 
 function store (state, emitter) {
   state.data = {
-    ship: yaml.safeLoad(fs.readFileSync(path.join(__dirname, '../../data/ship.yaml'), 'utf8')),
-    hero: yaml.safeLoad(fs.readFileSync(path.join(__dirname, '../../data/hero.yaml'), 'utf8')),
+    hero: yaml.safeLoad(fs.readFileSync(path.join(__dirname, '../../data/hero.yaml'))),
+    ship: yaml.safeLoad(fs.readFileSync(path.join(__dirname, '../../data/ship.yaml'))),
+    passengers: yaml.safeLoad(fs.readFileSync(path.join(__dirname, '../../data/passengers.yaml'))),
     tick: 0,
-    timerId: null,
-    secondsLeft: 3
+    timerId: null
   }
 
   state.computed = {

@@ -6,7 +6,10 @@ var devtools = require('choo-devtools')
 
 var app = choo()
 
-app.use(devtools())
+if (process.env.NODE_ENV !== 'production') {
+  app.use(devtools())
+}
+
 app.use(require('./store.js'))
 app.use(require('./router.js'))
 

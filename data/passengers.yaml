@@ -1,0 +1,63 @@
+- 
+  name: ''
+  role: 'Captain'
+  location: 'Ready Room'
+  position:  
+    x: 0
+    y: 0
+- 
+  name: ''
+  role: 'Scientist'
+  location: 'Bridge'
+  position: 
+    x: 0
+    y: 0
+- 
+  name: ''
+  role: 'Pilot'
+  location: 'Bridge'
+  position: 
+    x: 0
+    y: 0
+- 
+  name: ''
+  role: 'Engineer'
+  location: 'Engineering'
+  position: 
+    x: 0
+    y: 0
+- 
+  name: ''
+  role: 'Steward'
+  location: 'Store'
+  position: 
+    x: 0
+    y: 0
+- 
+  name: ''
+  role: 'Security Officer'
+  location: 'Promenade'
+  position: 
+    x: 0
+    y: 0
+- 
+  name: ''
+  role: 'Guest'
+  location: 'Promenade'
+  position: 
+    x: 0
+    y: 0
+- 
+  name: ''
+  role: 'Guest'
+  location: 'Mess Hall'
+  position: 
+    x: 0
+    y: 0
+- 
+  name: ''
+  role: 'Guest'
+  location: 'Guest Quarters'
+  position: 
+    x: 0
+    y: 0

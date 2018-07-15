@@ -1,0 +1,18 @@
+- 
+ name: 'Game starts'
+ conditions:
+    - 
+      - 'Tick'
+      - 'is'
+      - 1
+- 
+ name: 'Ship runs into an asteroid'
+ conditions:
+    - 
+      - 'Day'
+      - 'is'
+      - 1
+    - 
+      - 'Period'
+      - 'is'
+      - 'Afternoon'
