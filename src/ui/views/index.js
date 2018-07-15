@@ -1,9 +1,9 @@
 var html = require('choo/html')
-var { Tabs } = require('./components')
+var { Tabs, Console } = require('../components')
 
 var views = {
   main: mainView,
-  room: roomView,
+  room: require('./room'),
   inventory: inventoryView,
   stats: statsView,
   ship: shipView
@@ -23,46 +23,11 @@ function mainView (state, emit) {
     <div>
       <h1>Just a Passenger</h1>
 
-      <button onclick=${e => emit('rounds:finish')}>Pass</button>
+      ${state.cache(Console, 'console').render(state.data.console)}
 
       ${state.cache(Tabs, 'tabs').render(tabs)}
       ${state.cache(Tabs, 'tabs').selected.view(state, emit)}
     </div>`
-}
-
-function roomView (state, emit) {
-  return html`
-    <div>
-      <p>
-        Current location: <strong>${state.data.hero.location.name}</strong>
-      </p>
-      <p>
-        Doorways:
-        <ul class="list">
-          ${state.data.hero.location.doorways.map(doorway => html`
-            <li>
-              <button 
-                ${doorway.locked ? 'disabled' : ''} 
-                onclick=${e => enter(doorway)}>
-                ${doorway.destination.name}
-              </button>
-            </li>
-          `)}
-        </ul>
-      </p>
-
-      <hr>
-      
-      <pre class="">
-        ${JSON.stringify(state.data.hero.location, null, 2)}
-      </pre>
-    </div>`
-
-  function enter (doorway) {
-    var location = state.data.ship.rooms.find(room => room.name === doorway.destination.name)
-
-    emit('hero:teleport', location, doorway.destination.position)
-  }
 }
 
 function inventoryView (state, emit) {

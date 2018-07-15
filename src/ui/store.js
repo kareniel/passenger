@@ -16,7 +16,11 @@ function store (state, emitter) {
     ship: yaml.safeLoad(fs.readFileSync(path.join(__dirname, '../../data/ship.yaml'))),
     passengers: yaml.safeLoad(fs.readFileSync(path.join(__dirname, '../../data/passengers.yaml'))),
     tick: 0,
-    timerId: null
+    timerId: null,
+    console: [],
+    conditionVariables: {
+      'Ship ran into an asteroid': false
+    }
   }
 
   state.computed = {
@@ -40,7 +44,13 @@ function store (state, emitter) {
   })
 
   function registerEvents () {
+    emitter.on('object:look', lookAtObject)
     emitter.on('hero:teleport', teleportHero)
+  }
+
+  function lookAtObject (obj) {
+    state.data.console.push(obj.description)
+    emitter.emit('render')
   }
 
   function runInitialEvents () {
