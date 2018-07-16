@@ -2,62 +2,31 @@ var fs = require('fs')
 var path = require('path')
 var yaml = require('js-yaml')
 
-const MILLISECONDS_PER_TICK = 1000
-const TICKS_PER_ROUND = 3
-const ROUNDS_PER_PERIOD = 300
-const PERIODS_PER_DAY = 4
-const ROUNDS_PER_DAY = ROUNDS_PER_PERIOD * PERIODS_PER_DAY
+module.exports = gameStore
 
-module.exports = store
-
-function store (state, emitter) {
+function gameStore (state, emitter) {
   state.data = {
-    hero: yaml.safeLoad(fs.readFileSync(path.join(__dirname, '../../data/hero.yaml'))),
-    ship: yaml.safeLoad(fs.readFileSync(path.join(__dirname, '../../data/ship.yaml'))),
-    passengers: yaml.safeLoad(fs.readFileSync(path.join(__dirname, '../../data/passengers.yaml'))),
-    tick: 0,
-    timerId: null,
+    hero: yaml.safeLoad(fs.readFileSync(path.join(__dirname, '../../../data/hero.yaml'))),
+    ship: yaml.safeLoad(fs.readFileSync(path.join(__dirname, '../../../data/ship.yaml'))),
+    passengers: yaml.safeLoad(fs.readFileSync(path.join(__dirname, '../../../data/passengers.yaml'))),
     console: [],
     conditionVariables: {
       'Ship ran into an asteroid': false
     }
   }
 
-  state.computed = {
-    round () {
-      return state.tick / TICKS_PER_ROUND
-    },
-    day () {
-      var round = state.computed.round()
-
-      return Math.floor(round / ROUNDS_PER_DAY) + 1
-    },
-    period () {
-    // TODO: implement
-      return 'Morning'
-    }
-  }
-
   emitter.on('DOMContentLoaded', () => {
-    registerEvents()
-    runInitialEvents()
-  })
-
-  function registerEvents () {
     emitter.on('object:look', lookAtObject)
     emitter.on('hero:teleport', teleportHero)
-  }
+
+    var startingRoom = state.data.ship.rooms.find(room => room.name === 'Guest Quarters')
+
+    emitter.emit('hero:teleport', startingRoom)
+  })
 
   function lookAtObject (obj) {
     state.data.console.push(obj.description)
     emitter.emit('render')
-  }
-
-  function runInitialEvents () {
-    var { rooms } = state.data.ship
-    var startingRoom = rooms.find(room => room.name === 'Guest Quarters')
-
-    emitter.emit('hero:teleport', startingRoom)
   }
 
   function teleportHero (location, position) {

@@ -10,7 +10,7 @@ html, body {
 }
 
 canvas {
-  display: none;
+  /*display: none;*/
   width: 320px;
   height: 240px;
 }

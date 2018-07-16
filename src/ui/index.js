@@ -10,7 +10,9 @@ if (process.env.NODE_ENV !== 'production') {
   app.use(devtools())
 }
 
-app.use(require('./store.js'))
+app.use(require('./stores/game.store.js'))
+app.use(require('./stores/time.store.js'))
+
 app.use(require('./router.js'))
 
 module.exports = app

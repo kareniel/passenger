@@ -9,12 +9,26 @@ module.exports = {
     this.ctx = this.canvas.getContext('2d')
     this.ctx.imageSmoothingEnabled = false
 
+    this.sprites = {}
+
     el.appendChild(this.canvas)
     el.appendChild(uiEl)
 
     ui.mount(uiEl)
 
+    this.preload()
     this.start()
+  },
+  preload () {
+    this.load('hero', 'sprites/link.png', {})
+  },
+  load (key, src, opts) {
+    var el = document.createElement('img')
+
+    el.src = src
+    el.style.display = 'none'
+
+    this.sprites[key] = el
   },
   start () {
     this.update = this.update.bind(this)
@@ -52,14 +66,16 @@ module.exports = {
     this.ctx.fillStyle = 'white'
     this.ctx.font = 'bold 12px Arial'
     this.ctx.fillText(this.state.time.seconds.toFixed(2), 0, 14)
+
+    this.ctx.drawImage(this.sprites['hero'], 160, 120)
   }
 }
 
 function createCanvas () {
   var canvas = document.createElement('canvas')
 
-  canvas.width = 640
-  canvas.height = 480
+  canvas.width = 320
+  canvas.height = 240
 
   return canvas
 }

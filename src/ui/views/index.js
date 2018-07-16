@@ -1,5 +1,7 @@
 var html = require('choo/html')
-var { Tabs, Console } = require('../components')
+
+var Tabs = require('../components/Tabs')
+var Console = require('../components/Console')
 
 var views = {
   main: mainView,
