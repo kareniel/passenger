@@ -12,28 +12,47 @@ function timeStore (state, emitter) {
       },
       ticks: 0,
       round: 1,
+      actions: 0,
       period: 1,
       day: 1
     }
   }
 
   emitter.on('DOMContentLoaded', () => {
-    startTimer()
+    emitter.on('skip', skip)
+    emitter.on('room:exit', roomExit)
+    // startTimer()
   })
 
-  function startTimer () {
-    console.log('timer started')
-    state.time.data.ticks = 0
+  function skip () {
+    console.log('round', state.time.data.round, 'complete')
+    state.time.data.round++
+  }
 
-    state.timer.data.timers.round = setInterval(() => {
+  function startTimer () {
+    console.log('round', state.time.data.round)
+    state.time.data.ticks = 0
+    state.time.data.actions = 0
+
+    state.time.data.timers.round = setInterval(() => {
       state.time.data.ticks++
 
       if (state.time.data.ticks === TICKS_PER_ROUND) {
         emitter.emit('skip')
-        clearInterval(state.timer.data.timers.round)
-        state.time.data.round++
-        console.log('time \' up')
+        clearInterval(state.time.data.timers.round)
+        startTimer()
       }
     }, MILLISECONDS_PER_TICK)
+  }
+
+  function roomExit () {
+    if (state.time.data.round >= ROUNDS_PER_PERIOD) {
+      state.time.data.period++
+
+      if (state.time.data.period > 4) {
+        state.time.data.day++
+        state.time.data.period = 1
+      }
+    }
   }
 }
