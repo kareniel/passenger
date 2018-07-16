@@ -27,6 +27,32 @@ class Sprite {
   }
 }
 
+class Obstacle {
+  constructor (position, size) {
+    this.position = position
+    this.size = size
+  }
+
+  bottom () {
+    return this.position.y + this.size.height
+  }
+
+  intersects (x, y) {
+    return (
+      ((x > this.position.x) && (x < this.position.x + this.size.width)) ||
+      ((y > this.position.y) && (y < this.position.y + this.size.height))
+    )
+  }
+
+  render (ctx) {
+    ctx.fillStyle = 'grey'
+    ctx.fillRect(
+      this.position.x, this.position.y,
+      this.size.width, this.size.height
+    )
+  }
+}
+
 module.exports = {
   mount (selector) {
     var el = document.querySelector(selector)
@@ -40,8 +66,17 @@ module.exports = {
     this.sprites = {}
     this.hero = {
       facing: 2,
-      position: { x: 111, y: 111 }
+      position: { x: 111, y: 111 },
+      top () {
+        return this.position.y + 16
+      },
+      left () {
+        return this.position.x + 4
+      }
     }
+
+    this.hwall = new Obstacle({ x: 0, y: 50 }, { width: 320, height: 32 })
+    this.vwall = new Obstacle({ x: 0, y: 50 }, { width: 32, height: 320 })
 
     el.appendChild(this.canvas)
     el.appendChild(uiEl)
@@ -108,23 +143,29 @@ module.exports = {
     var speed = this.keys.size > BASE_SPEED ? BASE_SPEED * 0.75 : BASE_SPEED
 
     if (this.keys.has('w')) {
-      this.hero.position.y -= speed
       this.hero.facing = DIRECTION.UP
+
+      if (!this.hwall.intersects(0, this.hero.top() - speed)) {
+        this.hero.position.y -= speed
+      }
     }
 
     if (this.keys.has('d')) {
-      this.hero.position.x += speed
       this.hero.facing = DIRECTION.RIGHT
+      this.hero.position.x += speed
     }
 
     if (this.keys.has('s')) {
-      this.hero.position.y += speed
       this.hero.facing = DIRECTION.DOWN
+      this.hero.position.y += speed
     }
 
     if (this.keys.has('a')) {
-      this.hero.position.x -= speed
       this.hero.facing = DIRECTION.LEFT
+
+      if (!this.vwall.intersects(this.hero.left() - speed, 0)) {
+        this.hero.position.x -= speed
+      }
     }
   },
   render () {
@@ -139,6 +180,12 @@ module.exports = {
 
     this.ctx.fillText(this.state.time.seconds.toFixed(2), 1, 14)
     this.ctx.fillText(this.keysArr.join(','), 1, 28)
+
+    this.hwall.render(this.ctx)
+    this.vwall.render(this.ctx)
+
+    this.ctx.fillStyle = 'red'
+    this.ctx.fillRect(this.hero.left(), this.hero.top(), 1, 1)
 
     if (this.sprites['hero']) {
       var sprite = this.sprites['hero'][this.hero.facing]
