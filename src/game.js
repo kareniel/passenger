@@ -1,3 +1,6 @@
+var Vector = require('victor')
+var parallel = require('run-parallel')
+
 var ui = require('./ui')
 
 const BASE_SPEED = 1.75
@@ -9,15 +12,15 @@ const DIRECTION = {
 }
 
 class Sprite {
-  constructor (img, width, height, index) {
-    var cols = img.width / width
-    var rows = img.height / height
+  constructor (img, size, index) {
+    var cols = img.width / size.x
+    var rows = img.height / size.y
 
     this.img = img
-    this.sx = Math.floor(index / ((cols * rows) / cols)) * width
-    this.sy = Math.floor(index / ((cols * rows) / rows)) * height
-    this.sw = width
-    this.sh = height
+    this.sx = Math.floor(index / ((cols * rows) / cols)) * size.x
+    this.sy = Math.floor(index / ((cols * rows) / rows)) * size.y
+    this.sw = size.x
+    this.sh = size.y
   }
 
   render (ctx, pos) {
@@ -34,13 +37,13 @@ class Obstacle {
   }
 
   bottom () {
-    return this.position.y + this.size.height
+    return this.position.y + this.size.y
   }
 
-  intersects (x, y) {
+  intersects (v) {
     return (
-      ((x > this.position.x) && (x < this.position.x + this.size.width)) ||
-      ((y > this.position.y) && (y < this.position.y + this.size.height))
+      ((v.x > this.position.x) && (v.x < this.position.x + this.size.x)) ||
+      ((v.y > this.position.y) && (v.y < this.position.y + this.size.y))
     )
   }
 
@@ -48,7 +51,7 @@ class Obstacle {
     ctx.fillStyle = 'grey'
     ctx.fillRect(
       this.position.x, this.position.y,
-      this.size.width, this.size.height
+      this.size.x, this.size.y
     )
   }
 }
@@ -62,9 +65,46 @@ module.exports = {
     this.ctx = this.canvas.getContext('2d')
     this.ctx.imageSmoothingEnabled = false
 
-    this.keys = new Set()
+    el.appendChild(this.canvas)
+    el.appendChild(uiEl)
+
+    ui.mount(uiEl)
+
+    this.preload(() => {
+      this.start()
+    })
+  },
+  preload (callback) {
     this.sprites = {}
+
+    var tasks = [
+      done => this.load('hero', 'sprites/link.png', new Vector(24, 24), done)
+    ]
+
+    parallel(tasks, callback)
+  },
+  load (key, src, size, done) {
+    var img = new window.Image()
+
+    img.onload = () => {
+      var cols = img.width / size.x
+      var rows = img.height / size.y
+      var length = cols * rows
+
+      this.sprites[key] = new Array(length)
+        .fill(0)
+        .map((_, index) => new Sprite(img, size, index))
+
+      done()
+    }
+
+    img.src = src
+  },
+  start () {
+    this.keys = new Set()
+
     this.hero = {
+      sprites: this.sprites['hero'],
       facing: 2,
       position: { x: 111, y: 111 },
       top () {
@@ -72,38 +112,18 @@ module.exports = {
       },
       left () {
         return this.position.x + 4
+      },
+      render (ctx) {
+        this.sprites[this.facing].render(ctx, this.position)
+
+        ctx.fillStyle = 'red'
+        ctx.fillRect(this.left(), this.top(), 1, 1)
       }
     }
 
-    this.hwall = new Obstacle({ x: 0, y: 50 }, { width: 320, height: 32 })
-    this.vwall = new Obstacle({ x: 0, y: 50 }, { width: 32, height: 320 })
+    this.hwall = new Obstacle(new Vector(0, 50), new Vector(320, 24))
+    this.vwall = new Obstacle(new Vector(0, 50), new Vector(24, 240))
 
-    el.appendChild(this.canvas)
-    el.appendChild(uiEl)
-
-    ui.mount(uiEl)
-
-    this.preload()
-    this.start()
-  },
-  preload () {
-    this.load('hero', 'sprites/link.png', { width: 24, height: 24 })
-  },
-  load (key, src, { width, height }) {
-    var img = new window.Image()
-
-    img.onload = () => {
-      var cols = img.width / width
-      var rows = img.height / height
-      var len = cols * rows
-
-      this.sprites[key] = new Array(len).fill(0)
-        .map((_, i) => new Sprite(img, width, height, i))
-    }
-
-    img.src = src
-  },
-  start () {
     this.update = this.update.bind(this)
     this.startedAt = Date.now()
     this.state = {
@@ -145,7 +165,7 @@ module.exports = {
     if (this.keys.has('w')) {
       this.hero.facing = DIRECTION.UP
 
-      if (!this.hwall.intersects(0, this.hero.top() - speed)) {
+      if (!this.hwall.intersects(new Vector(0, this.hero.top() - speed))) {
         this.hero.position.y -= speed
       }
     }
@@ -163,7 +183,7 @@ module.exports = {
     if (this.keys.has('a')) {
       this.hero.facing = DIRECTION.LEFT
 
-      if (!this.vwall.intersects(this.hero.left() - speed, 0)) {
+      if (!this.vwall.intersects(new Vector(this.hero.left() - speed, 0))) {
         this.hero.position.x -= speed
       }
     }
@@ -184,14 +204,7 @@ module.exports = {
     this.hwall.render(this.ctx)
     this.vwall.render(this.ctx)
 
-    this.ctx.fillStyle = 'red'
-    this.ctx.fillRect(this.hero.left(), this.hero.top(), 1, 1)
-
-    if (this.sprites['hero']) {
-      var sprite = this.sprites['hero'][this.hero.facing]
-
-      sprite.render(this.ctx, this.hero.position)
-    }
+    this.hero.render(this.ctx)
   }
 }
 
