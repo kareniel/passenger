@@ -1,31 +1,44 @@
 const { DIRECTION } = require('./constants')
 
+var Component = require('choo/component')
+var html = require('choo/html')
 var parallel = require('run-parallel')
 var V = require('three').Vector2
 
 var Sprite = require('./classes/Sprite')
 var Hero = require('./classes/Hero')
 var Obstacle = require('./classes/Obstacle')
-var ui = require('../ui')
 
-module.exports = {
-  mount (selector) {
-    var el = document.querySelector(selector)
-    var uiEl = document.createElement('div')
+module.exports = class Game extends Component {
+  constructor () {
+    super()
 
-    this.canvas = createCanvas()
-    this.ctx = this.canvas.getContext('2d')
-    this.ctx.imageSmoothingEnabled = false
-
-    el.appendChild(this.canvas)
-    el.appendChild(uiEl)
-
-    ui.mount(uiEl)
+    this.update = this.update.bind(this)
+    this.state = {
+      running: false,
+      time: {
+        elapsed: 0.0,
+        frame: 0
+      }
+    }
 
     this.preload(() => {
+      this.setup()
       this.start()
     })
-  },
+  }
+
+  createElement () {
+    this.el = html`<canvas width="320" height="240"></canvas>`
+    this.ctx = this.el.getContext('2d')
+
+    return this.el
+  }
+
+  update () {
+    return false
+  }
+
   preload (callback) {
     this.sprites = {}
 
@@ -34,7 +47,8 @@ module.exports = {
     ]
 
     parallel(tasks, callback)
-  },
+  }
+
   loadSpritesheet (key, src, spriteSize, done) {
     var tilesheet = new window.Image()
 
@@ -51,8 +65,9 @@ module.exports = {
     }
 
     tilesheet.src = src
-  },
-  start () {
+  }
+
+  setup () {
     this.keys = new Set()
     this.hero = new Hero(this.sprites['hero'], new V(160, 120), DIRECTION.DOWN)
 
@@ -64,16 +79,6 @@ module.exports = {
       new Obstacle(new V(0, 0), new V(24, 240))
     ]
 
-    this.update = this.update.bind(this)
-    this.startedAt = Date.now()
-    this.state = {
-      running: true,
-      time: {
-        elapsed: 0.0,
-        frame: 0
-      }
-    }
-
     document.addEventListener('keydown', e => {
       this.keys.add(e.key)
     })
@@ -81,35 +86,44 @@ module.exports = {
     document.addEventListener('keyup', e => {
       this.keys.delete(e.key)
     })
+  }
+
+  start () {
+    this.startedAt = Date.now()
+    this.state.running = true
 
     this.frame()
-  },
+  }
+
   frame () {
     if (!this.state.running) return
 
     window.requestAnimationFrame(timestamp => {
-      this.update()
-      this.render()
+      this.gameUpdate()
+      this.gameRender()
 
       this.state.time.elapsed = timestamp
       this.state.time.frame++
 
       this.frame()
     })
-  },
+  }
+
   collides (box) {
     return this.obstacles.some(obstacle => box.intersectsBox(obstacle))
-  },
-  update () {
+  }
+
+  gameUpdate () {
     this.state.time.seconds = (this.state.time.elapsed / 1000)
 
     this.obstacles.forEach(obstacle => obstacle.update())
 
     this.hero.update(this)
-  },
-  render () {
+  }
+
+  gameRender () {
     this.ctx.fillStyle = 'black'
-    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height)
+    this.ctx.fillRect(0, 0, this.el.width, this.el.height)
 
     this.keysArr = []
     this.keys.forEach(key => this.keysArr.push(key))
@@ -127,13 +141,4 @@ module.exports = {
     this.ctx.fillStyle = 'white'
     this.ctx.font = 'bold 12px Arial'
   }
-}
-
-function createCanvas () {
-  var canvas = document.createElement('canvas')
-
-  canvas.width = 320
-  canvas.height = 240
-
-  return canvas
 }

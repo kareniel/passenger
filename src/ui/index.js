@@ -12,6 +12,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 app.use(require('./stores/game.store.js'))
 app.use(require('./stores/time.store.js'))
+app.use(require('./stores/menu.store.js'))
 
 app.use(require('./router.js'))
 

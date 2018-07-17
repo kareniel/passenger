@@ -1,5 +1,3 @@
-var game = require('./game')
+var app = require('./ui')
 
-game.mount('#viewport')
-
-global.game = game
+app.mount('#viewport')

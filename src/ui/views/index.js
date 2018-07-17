@@ -1,7 +1,9 @@
 var html = require('choo/html')
 
+var Game = require('../../game')
 var Tabs = require('../components/Tabs')
 var Console = require('../components/Console')
+var Menu = require('../components/Menu')
 
 var views = {
   main: mainView,
@@ -21,14 +23,17 @@ var tabs = [
 module.exports = views
 
 function mainView (state, emit) {
-  return html`
-    <div>
-      <h1>Just a Passenger</h1>
-
-      ${state.cache(Console, 'console').render(state.data.console)}
-
+  var el = html`
+    <div class="bg-black white" style="width: 640px; height: 480px">
       ${state.cache(Tabs, 'tabs').render(tabs)}
       ${state.cache(Tabs, 'tabs').selected.view(state, emit)}
+      ${state.cache(Console, 'console').render(state.data.console)}
+    </div>`
+
+  return html`
+    <div id="viewport" class="">
+      ${state.cache(Menu, 'menu').render(state.menu.toggled, el)}
+      ${state.cache(Game, 'game').render()}
     </div>`
 }
 

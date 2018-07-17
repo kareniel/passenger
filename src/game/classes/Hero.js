@@ -12,8 +12,8 @@ module.exports = class Hero {
     this.position = position
     this.sprite = this.sprites[this.direction]
 
-    var min = this.position.clone()
-    var max = this.position.clone().add(this.sprite.size)
+    var min = this.position.clone().add(new V(4, 16))
+    var max = this.position.clone().add(this.sprite.size).sub(new V(4, 0))
 
     this.bbox = new Box(min, max)
     this.nextBox = this.bbox.clone()
