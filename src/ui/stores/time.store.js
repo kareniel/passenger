@@ -25,12 +25,10 @@ function timeStore (state, emitter) {
   })
 
   function skip () {
-    console.log('round', state.time.data.round, 'complete')
     state.time.data.round++
   }
 
   function startTimer () {
-    console.log('round', state.time.data.round)
     state.time.data.ticks = 0
     state.time.data.actions = 0
 
