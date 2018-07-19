@@ -1,5 +1,4 @@
-var Box = require('three').Box2
-var V = require('three').Vector2
+var { Vector, Box } = require('@/lib/math')
 
 module.exports = class Obstacle extends Box {
   update () {

@@ -1,19 +1,16 @@
-var { BASE_SPEED, DIRECTION } = require('../constants')
+var { Vector, Box } = require('@/lib/math')
 
-var Three = require('three')
-
-var V = Three.Vector2
-var Box = Three.Box2
+const { BASE_SPEED, DIRECTION } = require('@/constants')
 
 module.exports = class Hero {
-  constructor (sprites, position = new V(0, 0), direction = DIRECTION.DOWN) {
+  constructor (sprites, position = new Vector(0, 0), direction = DIRECTION.DOWN) {
     this.sprites = sprites
     this.direction = direction
     this.position = position
     this.sprite = this.sprites[this.direction]
 
-    var min = this.position.clone().add(new V(4, 16))
-    var max = this.position.clone().add(this.sprite.size).sub(new V(4, 0))
+    var min = this.position.clone().add(new Vector(4, 16))
+    var max = this.position.clone().add(this.sprite.size).sub(new Vector(4, 0))
 
     this.bbox = new Box(min, max)
     this.nextBox = this.bbox.clone()
@@ -28,7 +25,7 @@ module.exports = class Hero {
       this.direction = DIRECTION.UP
 
       this.nextBox.copy(this.bbox)
-      this.nextBox.translate(new V(0, -speed))
+      this.nextBox.translate(new Vector(0, -speed))
 
       if (!world.collides(this.nextBox)) {
         this.position.y -= speed
@@ -40,7 +37,7 @@ module.exports = class Hero {
       this.direction = DIRECTION.RIGHT
 
       this.nextBox.copy(this.bbox)
-      this.nextBox.translate(new V(speed, 0))
+      this.nextBox.translate(new Vector(speed, 0))
 
       if (!world.collides(this.nextBox)) {
         this.position.x += speed
@@ -52,7 +49,7 @@ module.exports = class Hero {
       this.direction = DIRECTION.DOWN
 
       this.nextBox.copy(this.bbox)
-      this.nextBox.translate(new V(0, speed))
+      this.nextBox.translate(new Vector(0, speed))
 
       if (!world.collides(this.nextBox)) {
         this.position.y += speed
@@ -64,7 +61,7 @@ module.exports = class Hero {
       this.direction = DIRECTION.LEFT
 
       this.nextBox.copy(this.bbox)
-      this.nextBox.translate(new V(-speed, 0))
+      this.nextBox.translate(new Vector(-speed, 0))
 
       if (!world.collides(this.nextBox)) {
         this.position.x -= speed

@@ -8,10 +8,8 @@ function menuStore (state, emitter) {
   emitter.on('DOMContentLoaded', () => {
     emitter.on('menu:toggle', toggleMenu)
 
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') {
-        emitter.emit('menu:toggle')
-      }
+    window.addEventListener('keydown', e => {
+      if (e.key === 'Escape') emitter.emit('menu:toggle')
     })
   })
 

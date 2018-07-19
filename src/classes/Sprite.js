@@ -1,4 +1,4 @@
-var V = require('three').Vector2
+var { Vector } = require('@/lib/math')
 
 module.exports = class Sprite {
   constructor (img, size, index) {
@@ -12,7 +12,7 @@ module.exports = class Sprite {
 
     numberOf.sprites = numberOf.cols * numberOf.rows
 
-    this.offset = new V(
+    this.offset = new Vector(
       (Math.floor(index / (numberOf.sprites / numberOf.cols)) * size.x),
       (Math.floor(index / (numberOf.sprites / numberOf.rows)) * size.y)
     )

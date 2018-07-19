@@ -4,7 +4,7 @@
   "description": "game",
   "main": "index.js",
   "scripts": {
-    "start": "budo src/index.js:bundle.js --dir public --live --pushstate --port=8080 -- -t brfs",
+    "start": "budo src/index.js:bundle.js --dir public --live --pushstate --port=8080 -- -t brfs -t aliasify",
     "test": "standard --fix"
   },
   "repository": {
@@ -21,17 +21,22 @@
   },
   "homepage": "https://github.com/kareniel/passenger#readme",
   "devDependencies": {
+    "aliasify": "^2.1.0",
+    "brfs": "^2.0.0",
     "budo": "^11.3.0",
+    "choo-devtools": "^2.5.1",
     "fs-extra": "^6.0.1",
+    "js-yaml": "^3.12.0",
+    "module-alias": "^2.1.0",
     "standard": "^11.0.1"
   },
   "dependencies": {
-    "brfs": "^2.0.0",
     "choo": "^6.12.1",
-    "choo-devtools": "^2.5.1",
-    "js-yaml": "^3.12.0",
-    "run-parallel": "^1.1.9",
-    "three": "^0.94.0",
-    "victor": "^1.1.0"
+    "three": "^0.94.0"
+  },
+  "aliasify": {
+    "aliases": {
+      "@": "./src"
+    }
   }
 }

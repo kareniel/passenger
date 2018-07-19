@@ -1,9 +1,9 @@
 var html = require('choo/html')
 
-var Game = require('../../game')
-var Tabs = require('../components/Tabs')
-var Console = require('../components/Console')
-var Menu = require('../components/Menu')
+var Game = require('@/game')
+var Tabs = require('@/ui/components/Tabs')
+var Console = require('@/ui/components/Console')
+var Menu = require('@/ui/components/Menu')
 
 var views = {
   main: mainView,
